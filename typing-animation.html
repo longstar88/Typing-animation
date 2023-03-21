@@ -1,0 +1,36 @@
+<script>
+  function typeWriter(text, containerId, delay = 50) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        container.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, delay);
+      }
+    }
+    type();
+  }
+
+  function getQueryParams() {
+    const query = window.location.search.substring(1);
+    const params = query.split('&');
+    const result = {};
+
+    for (let i = 0; i < params.length; i++) {
+      const [key, value] = params[i].split('=');
+      result[key] = decodeURIComponent(value);
+    }
+
+    return result;
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const queryParams = getQueryParams();
+    if (queryParams.chatResponse) {
+      typeWriter(queryParams.chatResponse, 'typing-animation-container', 50);
+    }
+  });
+</script>
