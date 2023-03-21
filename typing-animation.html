@@ -1,36 +1,59 @@
-<script>
-  function typeWriter(text, containerId, delay = 50) {
-    let container = document.getElementById(containerId);
-    container.innerHTML = '';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typing Animation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    #typing-animation-container {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div id="typing-animation-container"></div>
 
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        container.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, delay);
+  <script>
+    function typeWriter(text, containerId, delay = 50) {
+      let container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          container.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, delay);
+        }
       }
-    }
-    type();
-  }
-
-  function getQueryParams() {
-    const query = window.location.search.substring(1);
-    const params = query.split('&');
-    const result = {};
-
-    for (let i = 0; i < params.length; i++) {
-      const [key, value] = params[i].split('=');
-      result[key] = decodeURIComponent(value);
+      type();
     }
 
-    return result;
-  }
+    function getQueryParams() {
+      const query = window.location.search.substring(1);
+      const params = query.split('&');
+      const result = {};
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const queryParams = getQueryParams();
-    if (queryParams.chatResponse) {
-      typeWriter(queryParams.chatResponse, 'typing-animation-container', 50);
+      for (let i = 0; i < params.length; i++) {
+        const [key, value] = params[i].split('=');
+        result[key] = decodeURIComponent(value);
+      }
+
+      return result;
     }
-  });
-</script>
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const queryParams = getQueryParams();
+      if (queryParams.chatResponse) {
+        typeWriter(queryParams.chatResponse, 'typing-animation-container', 50);
+      }
+    });
+  </script>
+</body>
+</html>
